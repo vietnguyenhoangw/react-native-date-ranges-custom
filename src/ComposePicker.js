@@ -144,6 +144,10 @@ export default class ComposePicker extends Component {
     );
   };
 
+  onPressBack = () => {
+    this.setModalVisible(false);
+  }
+
   render() {
     const { customStyles = {} } = this.props;
 
@@ -192,6 +196,7 @@ export default class ComposePicker extends Component {
                   currentDate={this.state.currentDate}
                   startDateLabel={this.props.startDateLabel}
                   endDateLabel={this.props.endDateLabel}
+                  onPressBack={this.onPressBack}
                 />
               </View>
               <View

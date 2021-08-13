@@ -45,7 +45,7 @@ export default class Month extends Component{
     const weekRange = moment.range(currentDate.clone().startOf('isoweek'), currentDate.clone().endOf('isoweek'));
     weekRange.by('days', (day) => {
       dayNames.push(
-        <Text key={day.date()} style={styles.dayName}>
+        <Text key={day.date().toString()} style={styles.dayName}>
           {day.format('dd')[0]} 
         </Text>
       );

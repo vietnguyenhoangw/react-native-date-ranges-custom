@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Picker } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 import moment from "moment";
 import normalize from "./normalizeText";
@@ -23,7 +23,7 @@ const styles = {
   headCoverContainer: {
     paddingTop: 20,
     paddingBottom: 20,
-    height: normalize(120),
+    height: normalize(145),
     width: "100%",
     justifyContent: "center",
     backgroundColor: "#F5A623",
@@ -39,16 +39,11 @@ const styles = {
     fontWeight: "bold"
   },
   headerDateSingle: {
-    fontSize: 40,
+    fontSize: 25,
     color: "white",
     fontWeight: "bold"
   }
 };
-
-const min = 1900;
-const max = 2100;
-const interval = max - min + 1;
-const rangeArray = Array.from(new Array(interval), (val, index) => index + min);
 
 export default class DateRange extends Component {
   constructor(props) {
@@ -130,6 +125,9 @@ export default class DateRange extends Component {
     const headFormat = this.props.headFormat || defalutFormat;
     this.setState({ clearSingle: this.state.currentDate.format(headFormat) });
   };
+  onPressBack = () => {
+
+  }
   render() {
     const markText = this.props.markText || "markText";
     const { customStyles = {} } = this.props;
@@ -159,11 +157,14 @@ export default class DateRange extends Component {
         <View style={headerContainer}>
           {this.props.mode === "single" && (
             <View>
-              <TouchableOpacity onPress={this.selectYear}>
+              <TouchableOpacity onPress={this.props.onPressBack} style={{marginBottom: 15}}>
+                <Image source={require("../ArrowLeft.png")} style={{width: 24, height: 24, tintColor: 'white', marginRight: 10}}/>
+              </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
                 <Text style={markTitle}>
                   {markText}
                 </Text>
-              </TouchableOpacity>
+              </View>
               <TouchableOpacity onPress={this.selectMonthAndDate}>
                 <Text style={headerDateSingle}>
                   {this.state.clearSingle}
@@ -173,7 +174,12 @@ export default class DateRange extends Component {
           )}
           {this.props.mode === "range" && (
             <View>
-              <Text style={markTitle}>{markText}</Text>
+              <TouchableOpacity onPress={this.props.onPressBack} style={{marginBottom: 15}}>
+                  <Image source={require("../ArrowLeft.png")} style={{width: 24, height: 24, tintColor: 'white', marginRight: 10}}/>
+                </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={markTitle}>{markText}</Text>
+              </View>
               <View style={styles.dateContainer}>
                 <Text style={headerDate}>
                   {this.state.clearStart ? this.state.clearStart : (this.props.startDateLabel ? this.props.startDateLabel : "Start Date")}
@@ -231,29 +237,6 @@ export default class DateRange extends Component {
               selectedBgColor={this.props.selectedBgColor}
               selectedTextColor={this.props.selectedTextColor}
             />
-          </View>
-        )}
-        {this.state.selectState === "year" && (
-          <View
-            style={[
-              styles.calendar,
-              { height: "75%", justifyContent: "center" }
-            ]}
-          >
-            <Picker
-              selectedValue={this.state.selectedYear}
-              onValueChange={this.changeYear}
-            >
-              {rangeArray.map((value, index) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    label={String(value)}
-                    value={value}
-                  />
-                );
-              })}
-            </Picker>
           </View>
         )}
       </View>
