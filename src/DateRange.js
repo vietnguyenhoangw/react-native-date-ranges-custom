@@ -209,7 +209,7 @@ export default class DateRange extends Component {
               <Text
                 style={{ fontSize: 20, color: "black", fontWeight: "bold" }}
               >
-                {this.state.focusedMonth.format("MM / YYYY")}
+                {this.state.focusedMonth.format("MMMM / YYYY")}
               </Text>
               <TouchableOpacity onPress={this.nextMonth}>
                 <Text
